@@ -6,6 +6,13 @@ const app = express();
 app.use('/',require('./routes/index') )
 
 
+
+
+// set the views 
+app.set('view engine', 'ejs');
+app.set('views', "./views");
+
+
 app.listen(port, (err)=>{
     if (err){
         console.log(`error in running server ${err}`);
