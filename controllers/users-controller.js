@@ -1,8 +1,22 @@
 const User= require("../models/user")
 
-module.exports.profile= (req, res)=>{
-    res.send("<h1> Hello from the profile router page </h1>")
-    res.end();
+module.exports.profile= async (req, res)=>{
+    try{
+        if(req.cookies.user_id){
+            // console.log(req.cookies.user_id);
+            const person = await User.findById(req.cookies.user_id);
+            console.log(person.name)
+            res.render('profile', {
+                user:person
+            })
+        }
+        else{
+            return res.redirect('/');
+        }
+    }
+    catch{
+        console.log("error");
+    }
 }
 //  render the sign up page 
 module.exports.signUp = async(req, res)=> {
@@ -46,4 +60,30 @@ module.exports.create= async (req, res)=>{
 //  adding data from the signup page to cfreate sesssion
 module.exports.createSession= async(req, res)=>{
     // todo
+    //  find the user 
+    try{
+        const Reqemail = req.body.email;
+        const ReqPass= req.body.password;
+        const Verify = await User.findOne({email:Reqemail});
+        if (!Verify){
+            res.redirect('/users/signup');
+        }
+        if(ReqPass===Verify.password){
+            res.cookie('user_id',Verify.id);
+            res.redirect('/users/profile');
+        }
+        else{
+            res.redirect('/users/signin')
+        }
+
+        
+    }
+    catch{
+        console.log("error in finding the person in the database ")
+    }
+
+    //  handle the user 
+    // handle user with passworn not matching   
+    //  handle user not found 
+
 }
