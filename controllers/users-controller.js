@@ -4,7 +4,7 @@ module.exports.profile= async (req, res)=>{
     try{
         if(req.cookies.user_id){
             // console.log(req.cookies.user_id);
-            const person = await User.findById(req.cookies.user_id);
+            const person = await User.findById(req.cookies.user_idgit );
             console.log(person.name)
             res.render('profile', {
                 user:person
