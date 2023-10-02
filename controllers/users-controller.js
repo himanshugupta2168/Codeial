@@ -1,11 +1,14 @@
 const User= require("../models/user")
 
 module.exports.profile= (req, res)=>{
-    res.send("<h1> Hello from the profile router page </h1>")
-    res.end();
+    res.render('user_profile')
+    
 }
 //  render the sign up page 
 module.exports.signUp = async(req, res)=> {
+    if (req.isAuthenticated()){
+        return res.redirect('/users/profile')
+    }
     return res.render('user_sign_up', {
         title: "Codeial | Sign Up", 
     });
@@ -13,7 +16,10 @@ module.exports.signUp = async(req, res)=> {
 
 
 // render the sign in page 
-module.exports.signIn= async(req, res)=>{
+module.exports.signIn= (req, res)=>{
+    if (req.isAuthenticated()){
+       return  res.redirect('/users/profile')
+    }
     return res.render('user_sign_in', {
         title: "Codeial | Sign In"
     });
@@ -46,4 +52,13 @@ module.exports.create= async (req, res)=>{
 //  adding data from the signup page to cfreate sesssion
 module.exports.createSession= async(req, res)=>{
     // todo
+    return res.redirect('/');
+}
+module.exports.destroysession= (req , res)=>{
+   req.logout(function (err){
+    if (err){
+        return next(err);
+    }
+    res.redirect('/');
+   });
 }
