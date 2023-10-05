@@ -11,6 +11,7 @@ const session = require('express-session')
 const passport =  require('passport');
 const passportLocal = require('./config/passport-local-strategy');
 const mongoStore= require('connect-mongo');
+const sassMiddleware = require('node-sass-middleware');
 
 
 app.use(express.urlencoded())
@@ -20,6 +21,15 @@ app.use(express.static('./assets'));
         // app.use(expressLayouts);
         // app.set('layout extractStyles', true);
         // app.set('layout extractScripts', true);
+
+app.use(sassMiddleware({
+    src:'./assets/scss',//source of the scss file 
+    dest:'./assets/css',// destination where the file is to be added 
+    debug:true,// to get all the bugs reported to be resolved 
+    outputStyle:'extended',// to get the css in a singlr line or multiple lines 
+    prefix:'/css'
+        
+}));
 
 // set the views 
 app.set('view engine', 'ejs');

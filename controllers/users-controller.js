@@ -1,7 +1,9 @@
 const User= require("../models/user")
 
 module.exports.profile= (req, res)=>{
-    res.render('user_profile')
+    res.render('user_profile', {
+        title:"Profile Page "
+    })
     
 }
 //  render the sign up page 
