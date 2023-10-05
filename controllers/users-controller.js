@@ -4,7 +4,7 @@ module.exports.profile= async (req, res)=>{
     try{
         if(req.cookies.user_id){
             // console.log(req.cookies.user_id);
-            const person = await User.findById(req.cookies.user_idgit );
+            const person = await User.findById(req.cookies.user_id);
             console.log(person.name)
             res.render('profile', {
                 user:person
@@ -71,6 +71,7 @@ module.exports.createSession= async(req, res)=>{
         if(ReqPass===Verify.password){
             res.cookie('user_id',Verify.id);
             res.redirect('/users/profile');
+
         }
         else{
             res.redirect('/users/signin')
@@ -87,3 +88,20 @@ module.exports.createSession= async(req, res)=>{
     //  handle user not found 
 
 }
+
+
+//  signing out the user 
+
+module.exports.signOut = (req, res) => {
+    try {
+      // Clear the user_id cookie to log the user out
+      res.clearCookie('user_id');
+      
+      // Redirect to the home page or any other appropriate page after sign-out
+      res.redirect('/');
+    } catch (error) {
+      console.error("Error while signing out: ", error);
+      // Handle the error, possibly by redirecting to an error page
+      res.redirect('/error');
+    }
+  };
