@@ -1,22 +1,29 @@
-<header> 
-    <div class="navbar">
-        <h3 class="logo">Codeial</h3>
-        <ul>
-            <%if (locals.user){%>
-                <li><a href="/users/profile">Hello , <%= user.name %></a></li>
-                <li>
-                    <a href="/users/signout">Sign   Out</a>
-                </li>
+<html>
+    <head>
+        <title><%= title%></title>
+        <link rel="stylesheet" href="/css/home.css">
+        <link rel="stylesheet" href="/css/header.css">
+    </head>
+    <header> 
+        <div class="navbar">
+            <h3 class="logo">Codeial</h3>
+            <ul>
+                <%if (locals.user){%>
+                    <li><a href="/users/profile">Hello , <%= user.name %></a></li>
+                    <li>
+                        <a href="/users/signout">Sign   Out</a>
+                    </li>
+        
+                <%}else{%>
+                    <li>
+                        <a href="/users/signin">Sign In</a>
+                    </li>
+                    <li>
+                        <a href="/users/signup">Sign Up</a>
+                    </li>
+                <%}%>
+            </ul>
     
-            <%}else{%>
-                <li>
-                    <a href="/users/signin">Sign In</a>
-                </li>
-                <li>
-                    <a href="/users/signup">Sign Up</a>
-                </li>
-            <%}%>
-        </ul>
-
-    </div>
-</header>
+        </div>
+    </header>
+</html>
