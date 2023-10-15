@@ -6,6 +6,8 @@ router.get('/',homeController.home)
 router.use('/users', require('./users'))
 router.use('/assignment', require('./Assignment'))
 
+router.use('/posts', require("./postRoute"))
+
 
 //  for any other routes accessible from here 
 
