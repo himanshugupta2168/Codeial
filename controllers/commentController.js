@@ -19,3 +19,22 @@ module.exports.create= async function (req, res){
         return res.redirect("/");
     }
 }
+module.exports.deletecomment = async (req, res)=>{
+    try{
+        const toDeleteComment = await comment.findById({_id:req.params.id});
+        const affectedPost = await Post.findById({_id:toDeleteComment.post});
+        if (toDeleteComment.user == req.user.id || req.user.id== affectedPost.users){
+            const deletedComment = await comment.findByIdAndDelete({_id:toDeleteComment._id});
+            const Updatedpost = await Post.findByIdAndUpdate(toDeleteComment.post, {$pull:{comments:deletedComment._id}});
+            return res.redirect('back');
+
+        }else{
+            return res.redirect("back");
+        }
+
+    }
+    catch(err){
+        console.log("erro in deleting the comment ",err);
+
+    }
+}

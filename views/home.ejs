@@ -23,10 +23,13 @@
                     <small><%=post.users.name%> </small>
                     <br>
                     <%=post.content%>
+                    <% if (locals.user && locals.user.id== post.users.id){ %>
+                        <a href="/posts/deletepost/<%=post.id%>"> Delete Post</a>
+                    <% } %>
                 </p>
                 <%if (locals.user){%>
                     <div class="Post-comments">
-                        <form action="posts/comments/create" method="post">
+                        <form action="/posts/comments/create" method="post">
                             <input type="text" name="content" id="" placeholder="Comment ......">
                             <input type="hidden" name="post" value="<%=post._id%>">
                             <input type="submit" value="Comment">
@@ -37,8 +40,13 @@
                     <h2>Comments</h2>
                     <ul id="post-comment-<%=post._id%>">
                         <%for (comment of post.comments){%>
-                            <small><p><%=comment.user.name%></p></small>
-                            <%=comment.content%>
+                            <li>
+                                <small><p><%=comment.user.name%></p></small>
+                                <%=comment.content%>
+                                <% if (locals.user && locals.user.id== post.users.id || locals.user.id== comment.user.id) {%>
+                                    <a href="/posts/comments/deletecomment/<%= comment.id%>"> Delete Comment</a>
+                                <% } %>
+                            </li>
                         <%}%>
                     </ul>
                 </section> 
