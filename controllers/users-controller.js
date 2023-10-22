@@ -6,6 +6,38 @@ module.exports.profile= (req, res)=>{
     })
     
 }
+// UserProfile
+module.exports.userprofile= async (req, res)=>{
+    try{
+        const userid= req.params.id;
+        const user= await User.findById({_id:userid});
+        if(user){
+            const updatedUser = {
+                name : user.name , 
+                password:"", 
+                email:user.email
+            }
+            return res.render('user_profile',{
+                title: 'Profile Page ',
+                user:updatedUser,
+            } 
+            )
+        }
+        else{
+            return res.redirect("/");
+            console.log("no such user available")
+        }
+    }
+    catch(err){
+        console.log("error in finding the user ", err);
+
+    }
+}
+
+
+
+
+
 //  render the sign up page 
 module.exports.signUp = async(req, res)=> {
     if (req.isAuthenticated()){

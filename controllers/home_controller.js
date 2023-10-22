@@ -1,6 +1,6 @@
 // const cookieParser = require("cookie-parser")
 const Post = require("../models/post");
-// const   User= require("../models/user")
+const   User= require("../models/user")
 
 module.exports.home= async(req, res)=>{
     try{
@@ -22,6 +22,7 @@ module.exports.home= async(req, res)=>{
         return res.render('home', {
         title: "Home Page ",
         posts:posts,
+        // all_users:friends,
     }) 
 
     }

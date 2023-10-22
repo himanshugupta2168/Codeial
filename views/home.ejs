@@ -20,7 +20,7 @@
         <%for( post of posts){%>
             <li>
                 <p>
-                    <small><%=post.users.name%> </small>
+                    <small><a href="/users/profile/<%= post.users.id%>"><%=post.users.name%> </a></small>
                     <br>
                     <%=post.content%>
                     <% if (locals.user && locals.user.id== post.users.id){ %>
@@ -30,7 +30,7 @@
                 <%if (locals.user){%>
                     <div class="Post-comments">
                         <form action="/posts/comments/create" method="post">
-                            <input type="text" name="content" id="" placeholder="Comment ......">
+                            <input type="text" name="content" id="" placeholder="Comment ......" required autocomplete="off">
                             <input type="hidden" name="post" value="<%=post._id%>">
                             <input type="submit" value="Comment">
                         </form>
@@ -41,9 +41,9 @@
                     <ul id="post-comment-<%=post._id%>">
                         <%for (comment of post.comments){%>
                             <li>
-                                <small><p><%=comment.user.name%></p></small>
+                                <small><a href="/users/profile/<%= comment.user.id %>"><p><%=comment.user.name%></p></a></small>
                                 <%=comment.content%>
-                                <% if (locals.user && locals.user.id== post.users.id || locals.user.id== comment.user.id) {%>
+                                <% if (locals.user && (locals.user.id== post.users.id || locals.user.id==comment.user.id)) {%>
                                     <a href="/posts/comments/deletecomment/<%= comment.id%>"> Delete Comment</a>
                                 <% } %>
                             </li>
@@ -54,5 +54,4 @@
 
         <%}%>
     </ul>
-
 </section>
