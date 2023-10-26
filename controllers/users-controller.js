@@ -86,6 +86,7 @@ module.exports.create= async (req, res)=>{
 //  adding data from the signup page to cfreate sesssion
 module.exports.createSession= async(req, res)=>{
     // todo
+    req.flash('success','Logged in Successfully');
     return res.redirect('/');
 }
 module.exports.destroysession= (req , res)=>{
@@ -93,6 +94,7 @@ module.exports.destroysession= (req , res)=>{
     if (err){
         return next(err);
     }
+    req.flash('success','Logged Out Successfully');
     res.redirect('/');
    });
 }

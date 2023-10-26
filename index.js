@@ -12,15 +12,16 @@ const passport =  require('passport');
 const passportLocal = require('./config/passport-local-strategy');
 const mongoStore= require('connect-mongo');
 const sassMiddleware = require('node-sass-middleware');
+const flash= require("connect-flash");
+const customMware= require("./config/Middleware")
+
 
 
 app.use(express.urlencoded())
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('./assets'));
-        // app.use(expressLayouts);
-        // app.set('layout extractStyles', true);
-        // app.set('layout extractScripts', true);
+
 
 app.use(sassMiddleware({
     src:'./assets/scss',//source of the scss file 
@@ -55,7 +56,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session ());
 app.use(passport.setAuthenticatedUser);
-
+app.use(flash());
+app.use(customMware.setFlash);
 
 // use express router 
 app.use('/',require('./routes/index') )

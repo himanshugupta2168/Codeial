@@ -27,4 +27,7 @@
     
         </div>
     </header>
+    <% if (flash.success && flash.success.length>0) {%>
+        <h4><%= flash.success%></h4>
+    <% } %>
 </html>
